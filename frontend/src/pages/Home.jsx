@@ -1,13 +1,26 @@
 ﻿import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { 
   AcademicCapIcon, 
   UserGroupIcon, 
   TrophyIcon, 
   RocketLaunchIcon,
-  ArrowRightIcon
+  ArrowRightIcon,
+  BookOpenIcon,
+  StarIcon,
+  ClockIcon
 } from '@heroicons/react/24/outline';
+import api from '../api/axios';
 
 const Home = () => {
+  const [featuredCourses, setFeaturedCourses] = useState([]);
+  const [stats, setStats] = useState({
+    students: '10K+',
+    courses: '50+',
+    instructors: '100+'
+  });
+  const [loading, setLoading] = useState(true);
+
   const features = [
     {
       icon: AcademicCapIcon,
@@ -31,8 +44,45 @@ const Home = () => {
     },
   ];
 
+  useEffect(() => {
+    fetchFeaturedCourses();
+    fetchStats();
+  }, []);
+
+  const fetchFeaturedCourses = async () => {
+    try {
+      const response = await api.get('/courses');
+      // Get first 4 courses as featured
+      const courses = response.data || [];
+      setFeaturedCourses(courses.slice(0, 4));
+    } catch (error) {
+      console.error('Failed to fetch featured courses:', error);
+      // Fallback to empty array
+      setFeaturedCourses([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchStats = async () => {
+    try {
+      const response = await api.get('/courses');
+      const courses = response.data || [];
+      // Update stats with real data
+      setStats({
+        students: '10K+',
+        courses: `${courses.length}+`,
+        instructors: '100+'
+      });
+    } catch (error) {
+      // Keep default stats if API fails
+      console.error('Failed to fetch stats:', error);
+    }
+  };
+
   return (
     <div>
+      {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
           <div style={{
@@ -69,6 +119,7 @@ const Home = () => {
             </Link>
           </div>
 
+          {/* Stats */}
           <div style={{
             display: 'flex',
             justifyContent: 'center',
@@ -76,23 +127,87 @@ const Home = () => {
             marginTop: '48px',
             paddingTop: '32px',
             borderTop: '1px solid rgba(255,255,255,0.08)',
+            flexWrap: 'wrap'
           }}>
             <div>
-              <div style={{ fontSize: '28px', fontWeight: '700' }}>10K+</div>
+              <div style={{ fontSize: '28px', fontWeight: '700' }}>{stats.students}</div>
               <div style={{ fontSize: '14px', color: '#94a3b8' }}>Students</div>
             </div>
             <div>
-              <div style={{ fontSize: '28px', fontWeight: '700' }}>50+</div>
+              <div style={{ fontSize: '28px', fontWeight: '700' }}>{stats.courses}</div>
               <div style={{ fontSize: '14px', color: '#94a3b8' }}>Courses</div>
             </div>
             <div>
-              <div style={{ fontSize: '28px', fontWeight: '700' }}>100+</div>
+              <div style={{ fontSize: '28px', fontWeight: '700' }}>{stats.instructors}</div>
               <div style={{ fontSize: '14px', color: '#94a3b8' }}>Instructors</div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Featured Courses Section */}
+      <section style={{ padding: '80px 24px', background: '#f8fafc' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <div className="section-header">
+            <h2>Featured <span style={{ color: '#4f46e5' }}>Courses</span></h2>
+            <p>Handpicked courses to start your learning journey</p>
+          </div>
+
+          {loading ? (
+            <div className="course-grid">
+              {[1, 2, 3, 4].map((_, i) => (
+                <div key={i} className="skeleton-card">
+                  <div className="skeleton-image"></div>
+                  <div className="skeleton-text"></div>
+                  <div className="skeleton-text short"></div>
+                  <div className="skeleton-text medium"></div>
+                </div>
+              ))}
+            </div>
+          ) : featuredCourses.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+              <BookOpenIcon style={{ width: '64px', height: '64px', color: '#94a3b8', margin: '0 auto 16px' }} />
+              <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#0f172a' }}>No courses yet</h3>
+              <p style={{ color: '#64748b' }}>Check back soon for new courses!</p>
+            </div>
+          ) : (
+            <div className="course-grid">
+              {featuredCourses.map((course) => (
+                <div key={course.id} className="course-card">
+                  <span className="course-badge">{course.category || 'Uncategorized'}</span>
+                  <h3 className="course-title">{course.title}</h3>
+                  <p className="course-description">
+                    {course.description || 'Learn with expert instructors'}
+                  </p>
+                  <div className="course-meta">
+                    <span>⭐ 4.5 (120 reviews)</span>
+                    <span>👨‍🎓 45 students</span>
+                  </div>
+                  <div className="course-footer">
+                    <span className="course-price">${course.price || '29.99'}</span>
+                    <Link 
+                      to={`/courses/${course.id}`} 
+                      className="btn-primary"
+                      style={{ padding: '8px 20px', fontSize: '14px' }}
+                    >
+                      Enroll Now
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div style={{ textAlign: 'center', marginTop: '40px' }}>
+            <Link to="/courses" className="btn-primary" style={{ padding: '14px 40px' }}>
+              View All Courses
+              <ArrowRightIcon style={{ width: '20px', height: '20px' }} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose StudyBuddy Section */}
       <section style={{ padding: '80px 24px', background: 'white' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div className="section-header">
@@ -119,6 +234,27 @@ const Home = () => {
                 <p style={{ color: '#64748b', fontSize: '14px' }}>{feature.desc}</p>
               </div>
             ))}
+          </div>
+
+          {/* Call to Action */}
+          <div style={{
+            textAlign: 'center',
+            marginTop: '60px',
+            padding: '48px',
+            background: 'linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%)',
+            borderRadius: '24px',
+            border: '1px solid #c7d2fe'
+          }}>
+            <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+              Ready to Start Learning?
+            </h2>
+            <p style={{ color: '#475569', fontSize: '18px', marginBottom: '24px', maxWidth: '500px', margin: '0 auto 24px' }}>
+              Join thousands of students and start your learning journey today.
+            </p>
+            <Link to="/register" className="btn-primary" style={{ padding: '14px 48px' }}>
+              Get Started Now
+              <ArrowRightIcon style={{ width: '20px', height: '20px' }} />
+            </Link>
           </div>
         </div>
       </section>
