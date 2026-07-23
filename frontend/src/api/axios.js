@@ -1,7 +1,7 @@
 ﻿import axios from 'axios';
 
-// ✅ Include /api in the URL
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// ✅ Base URL WITHOUT /api (it will be added in the interceptor)
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -12,6 +12,11 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    // ✅ Add /api prefix to all requests
+    if (!config.url.startsWith('/api')) {
+      config.url = `/api${config.url}`;
+    }
+    
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
