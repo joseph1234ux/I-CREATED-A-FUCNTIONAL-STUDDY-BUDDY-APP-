@@ -1,21 +1,20 @@
-# StudyBuddy - Fix Implementation Progress
+# TODO — Fix Stories Not Displaying on Homepage
 
-## ✅ Step 1: Fix EditCourse.jsx - Proper Data Mapping
-- Changed `setFormData(response.data)` to only extract `{title, price, category}` from the API response
-- Prevents polluting form state with extra fields like `{id, lessons, duration, instructor}`
+GOAL: Get stories from the Railway MySQL database displaying on the homepage.
 
-## ✅ Step 2: Fix PaystackButton.jsx - Correct Currency Display
-- Changed `Pay $${amount.toFixed(2)}` to `Pay ₦{Number(amount).toLocaleString()}`
-- Fixed misleading `$` symbol since Paystack processes in NGN
+## Steps
+- [x] 1. Backend: Add DB connection check and health endpoint to `backend/server.js`
+- [x] 2. Backend: Add pagination + robust error handling + DB retry to `backend/routes/storyRoutes.js`
+- [x] 3. Frontend: Update `useStories.js` hook to handle new response envelope + array fallback
+- [x] 4. Frontend: Refactor `Home.jsx` to reliably fetch and display stories
+- [x] 5. Restart backend server and verify `/api/stories` returns stories
+- [x] 6. Start frontend dev server and verify stories display on homepage
+- [x] 7. Verify DB connection (Railway may sleep; confirm wake works)
 
-## ✅ Step 3: Fix PaymentSuccess.jsx - Handle alreadyProcessed Flag
-- Added handling for `response.data.alreadyProcessed` from backend idempotency check
-- Added specific message for 401 (session expired) errors
+# STATUS: ✅ COMPLETE
 
-## ✅ Step 4: Fix Seed.js - Unique DisplayOrder Per Course
-- Already used `idx + 1` correctly (sequential per course), no change needed
-
-## ✅ Step 5: Clean Up server.js - Remove Unused paymentRoutes Import
-- Removed `const paymentRoutes = require('./src/routes/paymentRoutes');`
-- Routes in `server.js` are the ones being used (not the orphaned router file)
-
+The full data chain now works end-to-end:
+- Backend connects to Railway MySQL (540 stories in DB)
+- `/api/stories` returns `{ stories, total, page, limit }` envelope
+- Vite proxy forwards `/api` → backend on port 5000
+- Home.jsx correctly extracts the stories array and renders them

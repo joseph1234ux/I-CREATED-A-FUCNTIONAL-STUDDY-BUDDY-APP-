@@ -1,0 +1,314 @@
+.reader-shell {
+  min-height: 100vh;
+  padding: 92px 20px 48px;
+  background: #e8dfd0;
+  color: #1f1f1f;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.reader-shell.reader-theme-sepia {
+  background: #efe0c8;
+  color: #2f2618;
+}
+
+.reader-shell.reader-theme-dark {
+  background: #161616;
+  color: #f5f5f5;
+}
+
+.reader-progress {
+  position: fixed;
+  top: 68px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.08);
+  z-index: 40;
+}
+
+.reader-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e50914, #ff5c61);
+  transition: width 0.12s ease-out;
+}
+
+.reader-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(253, 248, 239, 0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.reader-shell.reader-theme-dark .reader-toolbar {
+  background: rgba(20, 20, 20, 0.96);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.reader-shell.reader-theme-sepia .reader-toolbar {
+  background: rgba(250, 240, 223, 0.96);
+}
+
+.reader-toolbar-left,
+.reader-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reader-toolbar-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.reader-toolbar-button:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.reader-shell.reader-theme-dark .reader-toolbar-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.reader-toolbar-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.reader-progress-text {
+  font-size: 12px;
+  color: #7a6a54;
+}
+
+.reader-shell.reader-theme-dark .reader-progress-text {
+  color: #9ca3af;
+}
+
+.reader-paper {
+  max-width: 820px;
+  margin: 0 auto;
+  background: #fdf9f2;
+  color: #1d1d1d;
+  padding: 52px 56px 56px;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.reader-shell.reader-theme-sepia .reader-paper {
+  background: #fcf4e7;
+}
+
+.reader-shell.reader-theme-dark .reader-paper {
+  background: #222222;
+  color: #f2f2f2;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.book-header {
+  border-bottom: 2px solid #d9c8a8;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+.book-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.book-author {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #6c6458;
+}
+
+.reader-shell.reader-theme-dark .book-author {
+  color: #a8afbc;
+}
+
+.chapter-header {
+  margin-bottom: 24px;
+}
+
+.chapter-number {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #856f5f;
+}
+
+.reader-shell.reader-theme-dark .chapter-number {
+  color: #94a3b8;
+}
+
+.chapter-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 8px 0 8px;
+}
+
+.chapter-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #7a6a54;
+}
+
+.reader-shell.reader-theme-dark .chapter-meta {
+  color: #9ca3af;
+}
+
+.reader-divider {
+  border: none;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.12);
+  margin: 24px 0;
+}
+
+.reader-shell.reader-theme-dark .reader-divider {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.story-content p {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  text-align: justify;
+  margin: 0 0 16px;
+  text-indent: 1.8em;
+}
+
+.story-content p:first-of-type {
+  text-indent: 0;
+}
+
+.drop-cap {
+  float: left;
+  font-size: 3rem;
+  line-height: 0.8;
+  padding-right: 10px;
+  padding-top: 6px;
+  font-weight: 700;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.reader-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.reader-nav-button {
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: transparent;
+  color: inherit;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.reader-nav-button:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.reader-nav-button-next {
+  background: #1a1a1a;
+  color: white;
+  border-color: #1a1a1a;
+}
+
+.reader-shell.reader-theme-dark .reader-nav-button-next {
+  background: #e50914;
+  border-color: #e50914;
+}
+
+.reader-nav-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.reader-back-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.reader-back-link a {
+  color: #e50914;
+  text-decoration: none;
+}
+
+.reader-loading,
+.reader-empty {
+  max-width: 520px;
+  margin: 120px auto 0;
+  padding: 28px 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  text-align: center;
+}
+
+.reader-empty a {
+  color: #e50914;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .reader-shell {
+    padding: 88px 12px 30px;
+  }
+
+  .reader-paper {
+    padding: 28px 20px 32px;
+  }
+
+  .chapter-title {
+    font-size: 1.6rem;
+  }
+
+  .reader-nav {
+    flex-direction: column;
+  }
+
+  .reader-nav-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .reader-toolbar-title {
+    display: none;
+  }
+
+  .story-content p {
+    font-size: 1rem;
+  }
+
+  .drop-cap {
+    font-size: 2.4rem;
+  }
+}
+.reader-select { border: 1px solid rgba(0,0,0,.14); background: transparent; color: inherit; border-radius: 999px; padding: 6px 10px; font-size: 13px; }
+.reader-settings { max-width: 760px; margin: 0 auto 14px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; color: inherit; font-size: 12px; }.reader-settings label { display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:rgba(0,0,0,.06); }.reader-theme-dark .reader-settings label { background:rgba(255,255,255,.09); }.reader-settings input { width:78px; accent-color:#e5097f; }

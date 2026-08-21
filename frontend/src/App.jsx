@@ -1,60 +1,66 @@
-﻿import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/common/Navbar';
+import Footer from './components/common/Footer';
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
-import Courses from './pages/Courses';
-import CourseDetail from './pages/CourseDetail';
+import Stories from './pages/Stories';
+import Poems from './pages/Poems';
+import Library from './pages/Library';
+import Store from './pages/Store';
+import StoryDetail from './pages/StoryDetail';
+import Reader from './pages/Reader';  // ← Make sure this is imported
+import AddStory from './pages/AddStory';
+import EditStory from './pages/EditStory';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import AddCourse from './pages/AddCourse';
-import EditCourse from './pages/EditCourse';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import AITutor from './pages/AITutor';
-import Notes from './pages/Notes';
-import JAMBPrep from './pages/JAMBPrep';
-import FocusMode from './pages/FocusMode';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminUsers from './pages/AdminUsers';
-import PaymentSuccess from './pages/PaymentSuccess';
-
+import Search from './pages/Search';
+import AdminStudio from './pages/AdminStudio';
 
 function App() {
   return (
-    <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
+    <div className="app">
       <Navbar />
-      <Routes>
-        {/* Main Pages */}
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/courses/:id" element={<CourseDetail />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        
-        {/* Auth Pages */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        
-        {/* Profile */}
-        <Route path="/profile" element={<Profile />} />
-        
-        {/* Course Management */}
-        <Route path="/add-course" element={<AddCourse />} />
-        <Route path="/edit-course/:id" element={<EditCourse />} />
-        
-        {/* Study Features */}
-        <Route path="/ai-tutor" element={<AITutor />} />
-        <Route path="/notes" element={<Notes />} />
-        <Route path="/jamb" element={<JAMBPrep />} />
-        <Route path="/focus" element={<FocusMode />} />
-        
-        {/* Admin */}
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/users" element={<AdminUsers />} /> {/* ✅ MOVED HERE */}
-        <Route path="/payment-success" element={<PaymentSuccess />} />
-      </Routes>
+      <AnimatePresence mode="wait">
+        <Routes>
+          {/* Main Pages */}
+          <Route path="/" element={<Home />} />
+          <Route path="/stories" element={<Stories />} />
+          <Route path="/poems" element={<Poems />} />
+          <Route path="/library" element={<Library />} />
+          <Route path="/store" element={<Store />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/stories/:id" element={<StoryDetail />} />
+          
+          {/* ⚠️ READER ROUTES - MUST BE HERE ⚠️ */}
+          <Route path="/reader/:id" element={<Reader />} />
+          <Route path="/reader/:id/:chapterId" element={<Reader />} />
+          
+          {/* Story Management */}
+          <Route path="/add-story" element={<AddStory />} />
+          <Route path="/edit-story/:id" element={<EditStory />} />
+          
+          {/* Info Pages */}
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          
+          {/* Auth Pages */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          
+          {/* User Pages */}
+          <Route path="/profile" element={<Profile />} />
+          
+          {/* Admin Pages */}
+          <Route path="/admin" element={<AdminStudio />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+        </Routes>
+      </AnimatePresence>
+      <Footer />
     </div>
   );
 }
